@@ -1,5 +1,5 @@
 const endPoints = {
-    createProduct: "/create/product",
+    createProduct: "/create-product",
     getProducts: "/get-product",
     getSingleProduct: "/get-product",
     updateProduct: "/update-product",

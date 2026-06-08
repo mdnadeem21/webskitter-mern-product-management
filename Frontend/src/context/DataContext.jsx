@@ -9,10 +9,9 @@ export const DataProvider = ({ children }) => {
     const fetchAllProducts = async () =>{
         try {
             const res = await axios.get('http://localhost:6060/api/v1/products/get-product')
-            console.log(res)
+            
             const productData = res.data.data;
             setData(productData)
-            console.log(productData)
         } catch (error) {
             console.log(`Error in fetching data : ${error}`)
         }

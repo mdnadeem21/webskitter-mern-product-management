@@ -43,7 +43,7 @@ function AddProduct() {
     data.append("size", formData.size);
     data.append("color", formData.color);
     data.append("productImage", formData.productImage);
-
+    console.log(`Data : ${data}`)
     try {
       const res = await createProduct(data);
 

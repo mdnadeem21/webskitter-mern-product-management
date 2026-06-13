@@ -9,13 +9,14 @@ import { getData } from '../context/DataContext';
 
 function EditProduct({product}) {
   const { id } = useParams();
-  const [data, fetchAllProducts] = getData()
+  const {data, fetchAllProducts} = getData()
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     brand: "",
+    category:"",
     size: "",
     color: "",
     image: null,
@@ -29,6 +30,7 @@ function EditProduct({product}) {
         price: res?.data?.data?.price || "",
         description: res?.data?.data?.description || "",
         brand: res?.data?.data?.brand || "",
+        category: res?.data?.data?.category || "",
         size: res?.data?.data?.size || "",
         color: res?.data?.data?.color || "",
         image: null,
@@ -67,6 +69,7 @@ function EditProduct({product}) {
     data.append("price", formData.price);
     data.append("description", formData.description);
     data.append("brand", formData.brand);
+    data.append("category", formData.category);
     data.append("size", formData.size);
     data.append("color", formData.color);
 
@@ -128,6 +131,14 @@ function EditProduct({product}) {
           value={formData.brand}
           className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Brand"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="category"
+          value={formData.category}
+          className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          placeholder="Category"
           onChange={handleChange}
         />
 

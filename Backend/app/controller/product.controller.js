@@ -118,11 +118,9 @@ class ProductController{
     
             
             if (req.file) {
-                // Find the existing product to retrieve the old file path
                 const oldProduct = await Product.findOne({ _id: id, isDeleted: false });
                 
                 if (!oldProduct) {
-                    // Clean up the newly uploaded file if product does not exist
                     if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
                     return res.status(404).json({
                         status: false,
@@ -130,9 +128,7 @@ class ProductController{
                     });
                 }
     
-                // Delete the old file from local storage if a path exists
                 if (oldProduct.productImage) { 
-                    // Adjust 'productImage' to match your exact schema field name
                     const oldFilePath = path.resolve(process.cwd(), oldProduct.productImage);  
                     
                     if (fs.existsSync(oldFilePath)) {
@@ -140,11 +136,11 @@ class ProductController{
                     }
                 }
     
-                // Append the new file path to the update payload
+                
                 updateData.productImage = req.file.path;
             }
     
-            // 3. Perform the actual database update
+            
             const updatedProduct = await Product.findOneAndUpdate(
                 { _id: id, isDeleted: false },
                 updateData,
@@ -165,7 +161,6 @@ class ProductController{
             });
     
         } catch (error) {
-            // Fallback: Delete newly uploaded file if database operational error occurs
             if (req.file && fs.existsSync(req.file.path)) {
                 fs.unlinkSync(req.file.path);
             }
@@ -181,9 +176,8 @@ class ProductController{
         try {
             const id = req.params.id;
     
-            // 1. Fetch the product details
             const deletedProduct = await Product.findByIdAndUpdate({
-                id:id,
+                _id:id,
                 },{
                     isDeleted:true
                 },{new:true}
@@ -196,23 +190,15 @@ class ProductController{
             }
     
             
-            // if (deletedProduct.productImage && fs.existsSync(deletedProduct.productImage)) {
-            //     try {
-            //         await fs.promises.unlink(deletedProduct.productImage);
-            //     } catch (fileError) {
-            //         console.error("File deletion failed:", fileError);
-            //     }
-            // }
-    
-            // // 3. Delete the document from MongoDB
-            // await Product.findByIdAndDelete(id);
-    
+            
+            
             return res.status(200).json({
                 status: true,
                 message: "Product soft deleted successfully",
             });
     
         } catch (error) {
+            console.log("Error in soft Delete : ",error.message)
             return res.status(500).json({
                 status: false,
                 message: "Something went wrong",
@@ -225,7 +211,6 @@ class ProductController{
         try {
             const id = req.params.id;
     
-            // 1. Fetch the product details
             const product = await Product.findById(id);
             if (!product) {
                 return res.status(404).json({ 
@@ -243,7 +228,6 @@ class ProductController{
                 }
             }
     
-            // 3. Delete the document from MongoDB
             await Product.findByIdAndDelete(id);
     
             return res.status(200).json({

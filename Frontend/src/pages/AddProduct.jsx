@@ -10,6 +10,7 @@ function AddProduct() {
     price: "",
     description: "",
     brand: "",
+    category:"",
     size: "",
     color: "",
     productImage: null,
@@ -40,10 +41,10 @@ function AddProduct() {
     data.append("price", formData.price);
     data.append("description", formData.description);
     data.append("brand", formData.brand);
+    data.append("category", formData.category);
     data.append("size", formData.size);
     data.append("color", formData.color);
     data.append("productImage", formData.productImage);
-    console.log(`Data : ${data}`)
     try {
       const res = await createProduct(data);
 
@@ -94,6 +95,13 @@ function AddProduct() {
             name="brand"
             className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="Brand"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="category"
+            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Category"
             onChange={handleChange}
           />
 

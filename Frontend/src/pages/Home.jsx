@@ -24,26 +24,27 @@ function Home() {
 
   useEffect(() => {
     fetchAllProducts();
-    console.log("Data : ",data)
+  }, []);
+  useEffect(() => {
     if (!data) return;
     const updatedList = data.filter((product) => {
       const matchesSearch =
         !search ||
         product.name?.toLowerCase().includes(search.toLowerCase()) ||
         product.brand?.toLowerCase().includes(search.toLowerCase());
-
+  
       const matchesCategory =
         category === "All" || product.category === category;
-
+  
       const matchesBrand = brand === "All" || product.brand === brand;
-
+  
       const productPrice = Number(product.price) || 0;
       const matchesPrice =
         productPrice >= priceRange[0] && productPrice <= priceRange[1];
-
+  
       return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
     });
-
+  
     setFilteredProducts(updatedList);
   }, [search, category, brand, priceRange, data]);
 

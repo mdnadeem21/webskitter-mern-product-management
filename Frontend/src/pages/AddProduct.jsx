@@ -44,7 +44,7 @@ function AddProduct() {
     data.append("category", formData.category);
     data.append("size", formData.size);
     data.append("color", formData.color);
-    data.append("productImage", formData.productImage);
+    data.append("productImage", formData.image);
     try {
       const res = await createProduct(data);
 

@@ -15,7 +15,6 @@ function ProductCard({ product }) {
       const response = await softDeleteProduct(product._id);
 
       if (response.data.status) {
-        alert("Product archived successfully!");
         fetchAllProducts();
       } else {
         alert("Failed to archive product.");
@@ -51,7 +50,9 @@ function ProductCard({ product }) {
     <div className="border relative border-gray-100 rounded-2xl cursor-pointer hover:scale-105 hover:shadow-2xl transition-all p-4 h-full flex flex-col justify-between bg-white">
       <div>
         <img
-          src={`http://localhost:6060/api/v1/products/${product.productImage}`}
+          src={product.productImage?`http://localhost:6060/${product.productImage}`
+          :"https://images.pexels.com/photos/19500076/pexels-photo-19500076.jpeg"
+            }
           alt={product.name}
           className="bg-gray-100 aspect-square w-full object-cover rounded-xl mb-3"
           onClick={() => navigate(`/products/${product.id}`)}

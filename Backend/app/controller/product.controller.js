@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Product = require('../../app/model/product.model')
-const StatusCode = require('../utils/status.code')
+const StatusCode = require('../utils/status.code');
+const { uploadFileOnCloudinary } = require('../utils/fileUploadOnCloudinary');
 
 class ProductController{
 
@@ -46,6 +47,7 @@ class ProductController{
             })
             if(req.file){
                 product.productImage = req.file.path
+                product.productImage = await uploadFileOnCloudinary(req.file.path)
             }
             const data = await product.save();
             return res.status(StatusCode.CREATED).json({
